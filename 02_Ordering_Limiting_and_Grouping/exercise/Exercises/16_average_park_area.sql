@@ -3,4 +3,4 @@
 -- (1 row)
 select avg(area) as average_park_area
 from park
-where has_camping = true
+where has_camping

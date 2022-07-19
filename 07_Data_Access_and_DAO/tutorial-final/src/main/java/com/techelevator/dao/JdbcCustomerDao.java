@@ -37,7 +37,7 @@ public class JdbcCustomerDao implements CustomerDao {
         String sql = "SELECT customer_id, first_name, last_name, street_address, city, phone_number, " +
                 "email_address, email_offers " +
                 "FROM customer " +
-                "WHERE first_name LIKE ? OR last_name LIKE ?;";
+                "WHERE first_name LIKE ? and last_name LIKE ? ;";
         search = "%" + search + "%";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, search, search);
         while (results.next()) {

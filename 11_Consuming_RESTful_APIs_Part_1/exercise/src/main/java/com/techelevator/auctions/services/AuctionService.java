@@ -1,8 +1,11 @@
 package com.techelevator.auctions.services;
 
+import com.techelevator.auctions.App;
 import org.springframework.web.client.RestTemplate;
 
 import com.techelevator.auctions.model.Auction;
+
+import java.util.List;
 
 public class AuctionService {
 
@@ -12,22 +15,22 @@ public class AuctionService {
 
     public Auction[] getAllAuctions() {
         // call api here
-        return null;
+        return restTemplate.getForObject(API_BASE_URL,Auction[].class);
     }
 
     public Auction getAuction(int id) {
         // call api here
-        return null;
+        return restTemplate.getForObject(API_BASE_URL + id,Auction.class);
     }
 
     public Auction[] getAuctionsMatchingTitle(String title) {
         // call api here
-        return null;
+        return restTemplate.getForObject(API_BASE_URL + "?title_like=" + title,Auction[].class);
     }
 
     public Auction[] getAuctionsAtOrBelowPrice(double price) {
         // call api here
-        return null;
+        return restTemplate.getForObject(API_BASE_URL + "?currentBid_lte=" + price, Auction[].class);
     }
 
 }

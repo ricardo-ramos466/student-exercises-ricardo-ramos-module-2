@@ -1,5 +1,6 @@
 package com.techelevator.auctions.services;
 
+import com.techelevator.auctions.App;
 import com.techelevator.util.BasicLogger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,17 +19,45 @@ public class AuctionService {
 
     public Auction add(Auction newAuction) {
         // place code here
-        return null;
+        HttpEntity<Auction> entity = makeEntity(newAuction);
+        Auction returnedAuction = null;
+        try{
+            returnedAuction = restTemplate.postForObject(API_BASE_URL,entity,Auction.class);
+        } catch (RestClientResponseException ex){
+            BasicLogger.log(ex.getRawStatusCode() + " : " + ex.getStatusText());
+        } catch (ResourceAccessException ex){
+            BasicLogger.log(ex.getMessage());
+        }
+        return returnedAuction;
     }
 
     public boolean update(Auction updatedAuction) {
         // place code here
-        return false;
+        boolean success = false;
+        HttpEntity<Auction> entity = makeEntity(updatedAuction);
+        try{
+            restTemplate.put(API_BASE_URL + updatedAuction.getId(),entity);
+            success = true;
+        }  catch (RestClientResponseException ex){
+             BasicLogger.log(ex.getRawStatusCode() + " : " + ex.getStatusText());
+        } catch (ResourceAccessException ex){
+            BasicLogger.log(ex.getMessage());
+        }
+        return success;
     }
 
     public boolean delete(int auctionId) {
         // place code here
-        return false;
+        boolean success = false;
+        try{
+            restTemplate.delete(API_BASE_URL + auctionId);
+            success = true;
+        } catch (RestClientResponseException ex){
+            BasicLogger.log(ex.getRawStatusCode() + " : " + ex.getStatusText());
+        } catch (ResourceAccessException ex){
+            BasicLogger.log(ex.getMessage());
+        }
+        return success;
     }
 
     public Auction[] getAllAuctions() {

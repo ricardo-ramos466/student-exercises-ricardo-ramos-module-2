@@ -7,9 +7,13 @@ import javax.validation.constraints.NotBlank;
 public class Auction {
 
     private int id;
+    @NotBlank(message = "The title field should not be blank.")
     private String title;
+    @NotBlank(message = "The description field should not be blank.")
     private String description;
+    @NotBlank(message = "The user field should not be blank.")
     private String user;
+    @Min(value = 1, message = "The currentBid field should be greater than 0.")
     private double currentBid;
 
     public Auction() {
